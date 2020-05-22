@@ -1,30 +1,32 @@
 <template>
-    <navbar></navbar>
+    <vk-grid class="uk-child-width-1-1">
+        <div>
+            <navbar></navbar>
+        </div>
+        <div>
+        </div>
+    </vk-grid>
 </template>
 
 <script>
     import navbar from './headers/NavbarComponent'
+    import vuex from '../../stores'
 
     export default {
         name: "index",
         components: {
-            navbar
+            navbar,
+        },
+        data () {
+            return {
+                data: {},
+            }
         },
         beforeCreate() {
-            this.bralcoaxios({ url: process.env.VUE_ENDPOINT_URL + "/api/v1/glossary", request: "GET" }).then( (response) => {
+            this.bralcoaxios({ url: process.env.VUE_APP_ENDPOINT_URL + "/api/v1/glossary/fetch", request: "GET" }).then( (response) => {
                 let resolve = this.bralcoresponse(response);
-                console.log(resolve);
-                // this.data   = resolve.data.glossary;
-                // this.pages  = this.data.length % this.perPage
-                // if( this.data.length > 0){
-                //     this.data = Object.entries(this.data).map( ([key, value]) =>
-                //     {
-                //     return value;
-                //     });
-                //     this.glossaryChunk = chunk(this.data, this.perPage);
-                //     this.activePage = this.glossaryChunk[1];
-                //     this.tableLength.value = this.activePage.length;
-                // }
+                this.data   = resolve.data.glossary;
+                vuex.state.app.links  = resolve.data.links;
             });
         }
     }
