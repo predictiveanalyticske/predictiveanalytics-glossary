@@ -15,7 +15,7 @@ BralcoHelpers.install = function (Vue) {
             contentType: false, 
             cache: false,
         };
-
+        
         if( !stored.state.app.loader ){
             stored.state.app.loader = true;
         }

@@ -57,20 +57,6 @@ export default new Router({
                             next({name: "auth"});
                         }
                     }
-                },
-                {
-                    name: "auth",
-                    path: '/auth',
-                    components: {
-                        view: HomeAuth,
-                    },
-                    beforeEnter(to,from,next){
-                        if( !Vuex.state.app.auth.isAuthenticated ){
-                            next();
-                        } else {
-                            next({name: "home"});
-                        }
-                    }
                 }
             ],
             components: {
@@ -78,6 +64,21 @@ export default new Router({
                 global: Home
             }
         },
+        {
+            name: "auth",
+            path: "/auth/login",
+            components: {
+                default: App,
+                global: HomeAuth,
+            },
+            beforeEnter(to,from,next){
+                if( !Vuex.state.app.auth.isAuthenticated ){
+                    next();
+                } else {
+                    next({name: "home"});
+                }
+            }
+        }
    ]
 
 });
