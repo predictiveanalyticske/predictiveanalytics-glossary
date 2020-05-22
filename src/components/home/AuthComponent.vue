@@ -97,6 +97,7 @@
             fields[item.name] = null;
            });
            this.fields = fields;
+           console.log(localStorage);
         }
     }
 </script>
