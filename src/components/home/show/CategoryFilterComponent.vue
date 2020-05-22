@@ -26,16 +26,17 @@
                 data: {},
                 glossaryChunk: {},
                 pages: 0,
+                perPage: 5
                 
             }
         },
-        beforeCreate() {
-            this.bralcoaxios({ url: process.env.VUE_APP_ENDPOINT_URL + "/api/v1/glossary/fetch/" + this.$route.params.category, request: "GET" }).then( (response) => {
+        created() {
+            this.bralcoaxios({ url: process.env.VUE_APP_ENDPOINT_URL + "/api/v1/glossary/fetch/view/" + this.$route.params.category, request: "GET" }).then( (response) => {
                 let resolve = this.bralcoresponse(response);
-                this.data   = resolve.data.glossary;
+                this.data   = resolve.data.items;
                 this.pages  = this.data.length % this.perPage
                 if( this.data.length > 0){
-                    this.data = Object.entries(this.data).map( ([key, value]) =>{ return key + value; });
+                    // this.data = Object.entries(this.data).map( ( [, value] ) => { return value; } );
                     this.glossaryChunk = chunk(this.data, this.perPage);
                     this.activePage = this.glossaryChunk[1];
                     this.tableLength.value = this.activePage.length;
