@@ -10,7 +10,6 @@
 
 <script>
     import navbar from './headers/NavbarComponent'
-    import vuex from '../../stores'
 
     export default {
         name: "index",
@@ -22,12 +21,6 @@
                 data: {},
             }
         },
-        beforeCreate() {
-            this.bralcoaxios({ url: process.env.VUE_APP_ENDPOINT_URL + "/api/v1/glossary/fetch", request: "GET" }).then( (response) => {
-                let resolve = this.bralcoresponse(response);
-                this.data   = resolve.data.glossary;
-                vuex.state.app.links  = resolve.data.links;
-            });
-        }
+
     }
 </script>
