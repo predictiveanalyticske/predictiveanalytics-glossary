@@ -24,7 +24,13 @@ var VuexData = {
           popups: false
         },
         loader: true,
+        links: {}
       }
+  },
+  getters: {
+    links: state => {
+      return state.app.links
+    }
   }
 };
 
