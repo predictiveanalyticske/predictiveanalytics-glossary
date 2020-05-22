@@ -11,7 +11,7 @@
                     <vk-offcanvas-close @click="slide = false"></vk-offcanvas-close>
                         <vk-nav class="uk-margin-auto-vertical">
                             <vk-nav-item-header title="Glossary Categories"></vk-nav-item-header>
-                            <vk-nav-item :title="value" v-for="(value,index) in data.links" :key="index" :href="$router.resolve({ name: 'filter', params: { category: value }}).href"></vk-nav-item>
+                            <vk-nav-item :title="value" v-for="(value,index) in data.links" :key="index" :href="routerLink(value)"></vk-nav-item>
                             <vk-nav-item-divider></vk-nav-item-divider>
                             <vk-nav-item title="Logout"></vk-nav-item>
                         </vk-nav>
@@ -27,6 +27,11 @@
                 filter: this.$router.resolve({name:"category"}).href,
                 slide: false,
                 data: {}
+            }
+        },
+        methods: {
+            routerLink (value){
+                return this.$router.resolve({ name: 'filter', params: { category: btoa(value) }}).href
             }
         },
         created(){
