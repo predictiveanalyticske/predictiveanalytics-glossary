@@ -1,16 +1,40 @@
 <template>
-    <vk-navbar class="uk-width-1-1">
-        <vk-navbar-logo slot="left" :class="'uk-light'">
-            <img v-if="data.logo != null">
-            <vk-icon v-else icon="home" ratio="1.3"></vk-icon>
-        </vk-navbar-logo>
-        <vk-navbar-nav slot="right">
-            <vk-nav-item  v-for="(item,index) in this.links" :key="index" :title="item.title" :icon="item.icon" :href="item.to"></vk-nav-item>
-        </vk-navbar-nav>
-    </vk-navbar>
+    <vk-grid class="uk-child-width-1-1">
+        <div>
+            <vk-navbar class="uk-margin">
+                  <vk-navbar-toggle title="Menu" @click="slide = true"></vk-navbar-toggle>
+            </vk-navbar>
+        </div>
+        <div>
+            <vk-offcanvas-content>
+                <vk-offcanvas overlay mode="slide" :show.sync="slide">
+                    <vk-offcanvas-close @click="slide = false"></vk-offcanvas-close>
+                        <vk-nav class="uk-margin-auto-vertical">
+                            <vk-nav-item-header title="Glossary Categories"></vk-nav-item-header>
+                            <vk-nav-item :title="value" v-for="(value,index) in data.links" :key="index" :href="$router.resolve({ name: 'filter', params: { category: value }}).href"></vk-nav-item>
+                            <vk-nav-item-divider></vk-nav-item-divider>
+                            <vk-nav-item title="Logout"></vk-nav-item>
+                        </vk-nav>
+                    </vk-offcanvas>
+            </vk-offcanvas-content>
+        </div>
+    </vk-grid>
 </template>
 <script>
     export default {
-        props:["links"]
+        data() {
+            return {
+                filter: this.$router.resolve({name:"category"}).href,
+                slide: false,
+                data: {}
+            }
+        },
+        created(){
+            this.data = this.$store.getters;
+        }
     }
 </script>
+
+<style>
+    
+</style>
