@@ -13,3 +13,15 @@
         },
     }
 </script>
+
+<style>
+    .uk-card-red {
+         background-color:#bf040f !important;
+    }
+    .uk-card-dark {
+         background-color:#bf040f !important;
+    }
+    .uk-card-no-shadow {
+        box-shadow: none !important;    
+    }
+</style>
