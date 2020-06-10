@@ -7,7 +7,6 @@ import BralcoHelper from './bralcohelpers'
 Vue.use(BralcoHelper);
 
 require('./vuikit');
-require('./apexcharts');
 
 Vue.config.productionTip = false
 
