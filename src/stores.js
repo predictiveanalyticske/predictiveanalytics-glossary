@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 var storage = window.localStorage;
-var env     = process.env;
 
 var VuexData = {
   state: {
@@ -18,25 +17,63 @@ var VuexData = {
         },
         env: {
           state: process.env.MIX_APP_ENV,
-          url: process.env.MIX_APP_URL,
+          url: process.env.VUE_APP_ENDPOINT_URL,
+        },
+        global: {
+          links: []
         },
         home: {
           popups: false
         },
         loader: true,
-        links: {}
       }
   },
   getters: {
+    global: state => {
+      return state.app.data.global;
+    },
     links: state => {
-      return state.app.links
+      return state.app.global.links;
+    },
+    loader: state => {
+      return state.app.loader;
+    },
+    isAuthenticated: state => {
+      return state.app.auth.isAuthenticated;
+    },
+    backendurl: state => {
+      return state.app.env.url;
+    }
+  },
+  mutations: {
+    access_token (state, val){
+      state.app.auth.access_token = val
+    },
+    links (state, val){
+      state.app.global.links = val
+    },
+    refresh_token (state, val){
+      state.app.auth.refresh_token = val
+    },
+    expires_in (state, val){
+      state.app.auth.expires_in = val
+    },
+    loading (state, val){
+      state.app.loader = val
+    },
+    isAuthenticated (state, val){
+      state.app.auth.isAuthenticated = val
+    },
+    isAuthorized (state, val){
+      state.app.auth.isAuthorized = val
+    },
+    token_type (state, val){
+      state.app.auth.token_type = val
     }
   }
 };
 
 authenticate();
-
-environment();
 
 export default new Vuex.Store(VuexData);
 
@@ -52,14 +89,4 @@ function authenticate(){
   }
   
 
-}
-
-function environment() {
-
-  if( process.env.length > 0 ){
-
-    VuexData.state.app.env.state = env.MIX_APP_ENV;
-    VuexData.state.app.env.url   = env.MIX_APP_URL;
-
-  }
 }

@@ -1,6 +1,6 @@
 <template>
       <div class="uk-width-1-3@l uk-width-1-3@m uk-width-1-2@s uk-position-center uk-light">
-        <vk-card padding="small">
+        <vk-card padding="small" class="uk-card-red uk-light">
                 <div class="uk-width-1-1 uk-text-center">
                     <vk-icon icon="user" ratio="6"></vk-icon>
                 </div>
@@ -13,17 +13,17 @@
                             </vk-card-title>
                         </div>
                         <div class="uk-padding-small">
-                            <form class="uk-padding-small" @submit.prevent="attemptLogin" action="/api/v1/auth/login" method="POST">
+                            <form class="uk-padding-small" @submit.prevent="attemptLogin" :action="$store.getters.backendurl+'/api/v1/auth/login'" method="POST">
                                 <fieldset class="uk-fieldset">
 
                                     <div class="uk-margin">
                                         <label>Email</label>
-                                        <input class="uk-input" v-model="fields.email" name="email" type="email" placeholder="Email Address">
+                                        <input class="uk-input" name="email" type="email" placeholder="Email Address">
                                     </div>
 
                                     <div class="uk-margin">
                                         <label>Password</label>
-                                        <input class="uk-input" v-model="fields.password" name="password" type="password" placeholder="Password">
+                                        <input class="uk-input" name="password" type="password" placeholder="Password">
                                     </div>
 
                                     <div class="uk-margin">
@@ -34,8 +34,35 @@
                             </form>
                         </div>
                     </vk-tabs-item>
-                    <vk-tabs-item title="Forgot Password">
+                    <vk-tabs-item title="One Time Access">
+                       <div slot="header">
+                            <vk-card-title>
+                                <p>Reset Password</p>
+                            </vk-card-title>
+                        </div>
+                        <div class="uk-padding-small">
+                            <form class="uk-padding-small" method="POST" :action="$store.getters.backendurl + '/glossary/auth/login'">
+                                <fieldset class="uk-fieldset">
 
+                                    <div class="uk-margin">
+                                        <label>Email</label>
+                                        <input class="uk-input" type="email" id="email" placeholder="Email Address">
+                                    </div>
+
+                                    <div class="uk-margin">
+                                        <label>Phone</label>
+                                        <input class="uk-input" type="phone" placeholder="">
+                                    </div>
+
+                                    <div class="uk-margin">
+                                        <vk-button>Request</vk-button>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </vk-tabs-item>
+                    <vk-tabs-item title="Forgot Password">
                        <div slot="header">
                             <vk-card-title>
                                 <p>Reset Password</p>
@@ -57,9 +84,7 @@
                                 </fieldset>
                             </form>
                         </div>
-
                     </vk-tabs-item>
-
                 </vk-tabs>
         </vk-card>
      </div>
@@ -67,7 +92,7 @@
 
 <script>
     import stored from '../../stores';
-
+    import router from '../../router';
     export default {
         name: "login",
         data () {
@@ -79,37 +104,22 @@
         methods: {
             attemptLogin (event) {
                 let el = event.target
-
-                var formData = new FormData();
-                
-                for(var item in this.fields){
-                    formData.append(item,this.fields[item]);
-                }   
-                this.bralcoaxios({ url: process.env.VUE_APP_ENDPOINT_URL + el.attributes.action.value, request:el.attributes.method.value, form: formData }).then( (response) => {
+                let formData = new FormData(el);
+                this.bralcoaxios({ url: el.attributes.action.value, request:el.attributes.method.value, form: formData }).then( (response) => {
                     this.bralcoresponse(response);
                 });
+            },
+        },
+        beforeRouteEnter(to,from,next){
+            switch( stored.getters.isAuthenticated ){
+                case true: 
+                    router.push({name:'home'})
+                break;
+                case false: 
+                    next();
+                    stored.commit('loading',false);
+                break;
             }
         },
-        mounted() {
-           stored.state.app.loader = false;
-           var fields = {};
-           document.querySelectorAll('input').forEach(function(index,item){
-            fields[item.name] = null;
-           });
-           this.fields = fields;
-           console.log(localStorage);
-        }
     }
 </script>
-<style scoped>
-
-    .uk-card{ 
-        background-color:#bf040f !important;
-        color: #fff !important;
-    }
-
-    .uk-select > option{ 
-        color: #1d1d1d;
-    }
-
-</style>
