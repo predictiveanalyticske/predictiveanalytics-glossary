@@ -3,6 +3,7 @@
         <navbar />
         <router-view name="view"></router-view>
         <footernav />
+        <sidebar />
         <div class="uk-position-bottom-right">
             <vk-button class="br-floating" @click="scrollToTop"><vk-icon icon="chevron-up"></vk-icon></vk-button>
         </div>
@@ -12,6 +13,7 @@
 <script>
     import navbar from '@/components/home/headers/NavbarComponent'
     import footernav from '@/components/home/footer/FooterComponent'
+    import sidebar from '@/components/home/headers/SidebarComponent'
 
     export default {
         beforeRouteEnter(to, from, next) {
@@ -23,6 +25,7 @@
         components: {
             navbar,
             footernav,
+            sidebar,
         },
         name: "home",
         methods: {
