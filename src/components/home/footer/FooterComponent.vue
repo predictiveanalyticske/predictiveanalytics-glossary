@@ -2,8 +2,8 @@
     <vk-card class="uk-card-dark" padding="large">
         <vk-grid class="uk-child-width-1-1">
             <div>
-                <vk-grid class="uk-child-width-1-2 uk-padding-small">
-                    <div class="uk-position-relative">
+                <vk-grid class="uk-child-width-1-2@xl uk-child-width-1-2@l uk-child-width-1-2@m uk-child-width-1-1@s uk-padding-small">
+                    <div class="uk-position-relative uk-padding-large">
                         <img src="@/assets/images/logo-full-white.png" class="uk-position-center"/>
                     </div>
                     <div class="uk-light">
@@ -30,13 +30,13 @@
                 </vk-grid><hr>
             </div>
             <div>
-                <vk-grid class="uk-child-width-1-2">
+                <vk-grid class="uk-child-width-1-2@xl uk-child-width-1-2@l uk-child-width-1-2@m uk-child-width-1-1@s">
                     <div>
                         <vk-iconnav>
-                            <vk-iconnav-item href="https://predictiveanalytics.co.ke" icon="world"></vk-iconnav-item>
+                            <vk-iconnav-item href="https://predictiveanalytics.co.ke" target="blank" icon="world"></vk-iconnav-item>
                         </vk-iconnav>
                     </div>
-                    <div class="uk-text-right">
+                    <div class="uk-text-right@xl uk-text-right@l uk-text-right@m uk-text-center@s">
                         <p>&copy; Predictive Analytics {{ year }}</p>
                     </div>
                 </vk-grid>

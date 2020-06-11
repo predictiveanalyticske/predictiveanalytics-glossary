@@ -11,7 +11,7 @@
         </vk-navbar>
         <vk-navbar transparent class="br-navbar uk-visible@s uk-visible@m">
             <vk-navbar-logo slot="left">
-                <img src="@/assets/images/logo-full-white.png" width="100%"/>
+                <img src="@/assets/images/logo-full-white.png" width="70%"/>
             </vk-navbar-logo>
             <vk-navbar-nav slot="center">
                 <vk-nav-item title="Home" :href="$router.resolve({name:'home'}).href"></vk-nav-item>
@@ -25,6 +25,7 @@
                         ></vk-nav-item>
                     </vk-navbar-nav-dropdown-nav>
                 </vk-navbar-nav-dropdown>
+                <vk-nav-item title="Logout" href="#" @click.prevent="logout"></vk-nav-item>
             </vk-navbar-nav>
         </vk-navbar>
     </div>

@@ -58,7 +58,7 @@
                 this.chunks = {};
                 this.$store.commit('title','');
                 this.$store.commit('subtitle','');
-
+                this.$store.commit('sidebar',false);
                 this.bralcoaxios({ url: this.$store.getters.backendurl + "/api/v1/glossary/fetch/view/" + category, request: "GET" }).then( (response) => {
                     let resolve = this.bralcoresponse(response);
                     this.data   = resolve.data.items;
@@ -89,6 +89,7 @@
         },
         mounted () {
             this.$store.commit('searchBar',false);
+            this.$store.commit('sidebar',false);
         },
         beforeRouteEnter(to,from,next) {
             next( vm => {

@@ -45,6 +45,7 @@
                 });
             },
             watchData(category){
+                this.$store.commit('sidebar',false);
                 this.bralcoaxios({ url: this.$store.getters.backendurl + "/api/v1/glossary/item/filter/" + category, request: "GET" }).then( (response) => {
                     let resolve = this.bralcoresponse(response);
                     this.data   = resolve.data.filter;
@@ -73,6 +74,7 @@
         },
         mounted () {
             this.$store.commit('searchBar',true);
+            this.$store.commit('sidebar',false);
         },
         beforeRouteEnter(to,from,next) {
             next( vm => {

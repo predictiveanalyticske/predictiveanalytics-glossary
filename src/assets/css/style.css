@@ -18,6 +18,9 @@ h1,h2,h3,h4,h5,h6,p,a,input,text,select,label,button{
 .uk-card-no-shadow {
    box-shadow: none !important;    
 }
+.uk-offcanvas-bar{
+  background-color:#121921 !important;
+}
 .br-navbar{
   z-index: 1 !important;
 }
