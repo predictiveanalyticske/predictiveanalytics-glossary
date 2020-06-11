@@ -23,9 +23,14 @@ var VuexData = {
           links: []
         },
         home: {
-          popups: false
+          searchBar: false,
+          banner: {
+            title: '',
+            subtitle: ''
+          }
         },
         loader: true,
+        sidebar: false,
       }
   },
   getters: {
@@ -43,6 +48,18 @@ var VuexData = {
     },
     backendurl: state => {
       return state.app.env.url;
+    },
+    sidebar: state => {
+      return state.app.sidebar;
+    },
+    searchBar: state => {
+      return state.app.home.searchBar;
+    },
+    title: state => {
+      return state.app.home.banner.title;
+    },
+    subtitle: state => {
+      return state.app.home.banner.subtitle;
     }
   },
   mutations: {
@@ -69,6 +86,18 @@ var VuexData = {
     },
     token_type (state, val){
       state.app.auth.token_type = val
+    },
+    sidebar (state, val){
+      state.app.sidebar = val
+    },
+    searchBar (state, val){
+      state.app.home.searchBar = val
+    },
+    title (state, val){
+      state.app.home.banner.title = val
+    },
+    subtitle (state, val){
+      state.app.home.banner.subtitle = val
     }
   }
 };
