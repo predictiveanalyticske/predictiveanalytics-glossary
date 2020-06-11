@@ -15,10 +15,14 @@
     components: {
       ICountUp
     },
+    computed: {
+      endVal () {
+        return this.ceil;
+      }
+    },
     data() {
       return {
         delay: 1000,
-        endVal: this.ceil,
         options: {
           useEasing: true,
           useGrouping: true,
