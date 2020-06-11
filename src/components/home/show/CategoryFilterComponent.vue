@@ -46,6 +46,29 @@
                         this.letters.push(item.name.charAt(0));
                         this.chunks[item.name.charAt(0)] = [];
                     });
+                    this.$store.commit('title',this.glossary.title);
+                    this.$store.commit('subtitle',this.glossary.summary);
+                    this.initPagination();
+                });
+            },
+            watchData(category){
+                this.letters = [];
+                this.glossary = {};
+                this.data = {};
+                this.chunks = {};
+                this.$store.commit('title','');
+                this.$store.commit('subtitle','');
+
+                this.bralcoaxios({ url: this.$store.getters.backendurl + "/api/v1/glossary/fetch/view/" + category, request: "GET" }).then( (response) => {
+                    let resolve = this.bralcoresponse(response);
+                    this.data   = resolve.data.items;
+                    this.glossary  = resolve.data.glossary;
+                    this.data.forEach( (item, ) => {
+                        this.letters.push(item.name.charAt(0));
+                        this.chunks[item.name.charAt(0)] = [];
+                    });
+                    this.$store.commit('title',this.glossary.title);
+                    this.$store.commit('subtitle',this.glossary.summary);
                     this.initPagination();
                 });
             },
@@ -64,6 +87,9 @@
                 elmnt.scrollIntoView();
             }
         },
+        mounted () {
+            this.$store.commit('searchBar',false);
+        },
         beforeRouteEnter(to,from,next) {
             next( vm => {
                 vm.initData();
@@ -73,6 +99,9 @@
         watch:{
             pageNumber () {
                 this.activePage = this.glossaryChunk[this.pageNumber - 1];
+            },
+            $route (to) {
+                this.watchData(to.params.category);
             }
         }
     }
