@@ -11,6 +11,7 @@ import App from './App';
 import Home from './components/global/HomeComponent.vue';
 import HomeIndex from './components/home/IndexComponent.vue';
 import HomeCategory from './components/home/CategoryComponent.vue';
+import HomeItemFilter from './components/home/FilterComponent.vue';
 import HomeFilter from './components/home/show/CategoryFilterComponent.vue';
 import HomeAuth from './components/home/AuthComponent.vue';
 
@@ -26,6 +27,20 @@ export default new Router({
                     path: '',
                     components: {
                         view: HomeIndex,
+                    },
+                    beforeEnter(to,from,next){
+                        if( Vuex.state.app.auth.isAuthenticated ){
+                            next();
+                        } else {
+                            next({name: "auth"});
+                        }
+                    }
+                },
+                {
+                    name:"itemfilter",
+                    path: '/filter/:scopeitem',
+                    components: {
+                        view: HomeItemFilter,
                     },
                     beforeEnter(to,from,next){
                         if( Vuex.state.app.auth.isAuthenticated ){
