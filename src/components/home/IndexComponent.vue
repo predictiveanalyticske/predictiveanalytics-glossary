@@ -50,6 +50,9 @@
                 });
             }
         },
+        mounted () {
+            this.$store.commit('searchBar',true);
+        },
         name: "index",
         watch: {
             data: {
