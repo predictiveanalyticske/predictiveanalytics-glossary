@@ -35,6 +35,15 @@ h1,h2,h3,h4,h5,h6,p,a,input,text,select,label,button{
     position: relative !important;
 }
 
+.br-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;  
+}
+
 .br-search-title {
   color: #fff;
   font-size: 36pt;

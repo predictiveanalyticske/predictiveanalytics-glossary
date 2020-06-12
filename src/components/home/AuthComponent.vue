@@ -1,19 +1,27 @@
 <template>
-      <div class="uk-width-1-3@l uk-width-1-3@m uk-width-1-2@s uk-position-center uk-light">
-        <vk-card padding="small" class="uk-card-red uk-light">
-                <div class="uk-width-1-1 uk-text-center">
-                    <vk-icon icon="user" ratio="6"></vk-icon>
+    <vk-grid class="uk-child-width-1-2@xl uk-child-width-1-2@l uk-child-width-1-2@m uk-child-width-1-1@s br-fixed">
+        <div class="uk-background-default uk-flex uk-flex-center uk-flex-middle uk-visible@s">
+            <vk-card type="blank" padding="small" class="uk-text-center uk-position-relative">
+                <img src="@/assets/images/login-banner.png" width="50%" class="uk-visible@m"/>
+                <img src="@/assets/images/login-banner.png" width="50%" class="uk-visible@xl"/>
+                <h2 class="uk-heading-line uk-text-center"><span>Predictive Analytics Glossary</span></h2>
+                <img src="@/assets/images/login-banner.png" width="40%" class="uk-hidden@xl uk-hidden@l uk-hidden@m"/>
+                <div class="uk-flex-center">
+                    <span><a href="https://predictiveanalytics.co.ke" target="_blank"><vk-icon icon="world"></vk-icon></a></span>
+                    <span><p>&copy; Predictive Analytics {{ year }}</p></span>
                 </div>
-                <vk-tabs align="center" :keepAlive="true" :activeTab="tab">
+            </vk-card>
+        </div>
+        <div class="uk-flex uk-flex-center uk-flex-middle">
+            <div>
+                <div class="uk-text-center">
+                 <img src="@/assets/images/logo-full-red.png"/>
+                </div>
+                <vk-tabs flipped align="center" :keepAlive="true" :activeTab="tab" animation="fade">
                     <vk-tabs-item title="Login">
-
-                        <div slot="header">
-                            <vk-card-title>
-                                <p>Account Login</p>
-                            </vk-card-title>
-                        </div>
-                        <div class="uk-padding-small">
+                        <vk-card padding="small" class="uk-card-dark uk-light">
                             <form class="uk-padding-small" @submit.prevent="attemptLogin" :action="$store.getters.backendurl+'/api/v1/auth/login'" method="POST">
+                                <h2 class="uk-heading-bullet">Account Login</h2>
                                 <fieldset class="uk-fieldset">
 
                                     <div class="uk-margin">
@@ -32,62 +40,55 @@
 
                                 </fieldset>
                             </form>
-                        </div>
+                        </vk-card>
                     </vk-tabs-item>
                     <vk-tabs-item title="One Time Access">
-                       <div slot="header">
-                            <vk-card-title>
-                                <p>Reset Password</p>
-                            </vk-card-title>
-                        </div>
-                        <div class="uk-padding-small">
-                            <form class="uk-padding-small" method="POST" :action="$store.getters.backendurl + '/glossary/auth/login'">
-                                <fieldset class="uk-fieldset">
+                    <vk-card padding="small" class="uk-card-dark uk-light">
+                        <form class="uk-padding-small" method="POST" :action="$store.getters.backendurl + '/glossary/auth/login'">
+                            <h2 class="uk-heading-bullet">One Time Access</h2>
+                            <fieldset class="uk-fieldset">
 
-                                    <div class="uk-margin">
-                                        <label>Email</label>
-                                        <input class="uk-input" type="email" id="email" placeholder="Email Address">
-                                    </div>
+                                <div class="uk-margin">
+                                    <label>Email</label>
+                                    <input class="uk-input" type="email" id="email" placeholder="Email Address">
+                                </div>
 
-                                    <div class="uk-margin">
-                                        <label>Phone</label>
-                                        <input class="uk-input" type="phone" placeholder="">
-                                    </div>
+                                <div class="uk-margin">
+                                    <label>Phone</label>
+                                    <input class="uk-input" type="phone" placeholder="">
+                                </div>
 
-                                    <div class="uk-margin">
-                                        <vk-button>Request</vk-button>
-                                    </div>
+                                <div class="uk-margin">
+                                    <vk-button>Request</vk-button>
+                                </div>
 
-                                </fieldset>
-                            </form>
-                        </div>
+                            </fieldset>
+                        </form>
+                    </vk-card>
                     </vk-tabs-item>
                     <vk-tabs-item title="Forgot Password">
-                       <div slot="header">
-                            <vk-card-title>
-                                <p>Reset Password</p>
-                            </vk-card-title>
-                        </div>
-                        <div class="uk-padding-small">
-                            <form class="uk-padding-small">
-                                <fieldset class="uk-fieldset">
+                    <vk-card padding="small" class="uk-card-dark uk-light">
+                        <form class="uk-padding-small" >
+                            <h2 class="uk-heading-bullet">Reset Password</h2>
+                            <fieldset class="uk-fieldset">
 
-                                    <div class="uk-margin">
-                                        <label>Email</label>
-                                        <input class="uk-input" type="email" id="email" placeholder="Email Address">
-                                    </div>
+                                <div class="uk-margin">
+                                    <label>Email</label>
+                                    <input class="uk-input" type="email" id="email" placeholder="Email Address">
+                                </div>
 
-                                    <div class="uk-margin">
-                                        <vk-button>Reset</vk-button>
-                                    </div>
+                                <div class="uk-margin">
+                                    <vk-button>Reset</vk-button>
+                                </div>
 
-                                </fieldset>
-                            </form>
-                        </div>
+                            </fieldset>
+                        </form>
+                    </vk-card>
                     </vk-tabs-item>
                 </vk-tabs>
-        </vk-card>
-     </div>
+            </div>
+        </div>
+    </vk-grid>
 </template>
 
 <script>
@@ -98,7 +99,8 @@
         data () {
             return  {
                 tab: 0,
-                fields: {}
+                fields: {},
+                year: new Date().getFullYear()
             }
         },
         methods: {
