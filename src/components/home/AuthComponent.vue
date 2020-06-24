@@ -20,18 +20,18 @@
                 <vk-tabs flipped align="center" :keepAlive="true" :activeTab="tab" animation="fade">
                     <vk-tabs-item title="Login">
                         <vk-card padding="small" class="uk-card-dark uk-light">
-                            <form class="uk-padding-small" @submit.prevent="attemptLogin" :action="$store.getters.backendurl+'/api/v1/auth/login'" method="POST">
+                            <form class="uk-padding-small" @submit.prevent="submitForm" :action="$store.getters.backendurl+'/api/v1/glossary/auth/login'" method="POST" login>
                                 <h2 class="uk-heading-bullet">Account Login</h2>
                                 <fieldset class="uk-fieldset">
 
                                     <div class="uk-margin">
                                         <label>Email</label>
-                                        <input class="uk-input" name="email" type="email" placeholder="Email Address">
+                                        <input class="uk-input" name="email" type="email" required placeholder="Email Address">
                                     </div>
 
                                     <div class="uk-margin">
                                         <label>Password</label>
-                                        <input class="uk-input" name="password" type="password" placeholder="Password">
+                                        <input class="uk-input" name="password" type="password" required placeholder="Password">
                                     </div>
 
                                     <div class="uk-margin">
@@ -44,41 +44,22 @@
                     </vk-tabs-item>
                     <vk-tabs-item title="One Time Access">
                     <vk-card padding="small" class="uk-card-dark uk-light">
-                        <form class="uk-padding-small" method="POST" :action="$store.getters.backendurl + '/glossary/auth/login'">
+                        <form class="uk-padding-small" method="POST" @submit.prevent="submitForm" signup="true" :action="$store.getters.backendurl + '/api/v1/glossary/auth/onetime/signup'">
                             <h2 class="uk-heading-bullet">One Time Access</h2>
                             <fieldset class="uk-fieldset">
 
                                 <div class="uk-margin">
                                     <label>Email</label>
-                                    <input class="uk-input" type="email" id="email" placeholder="Email Address">
+                                    <input class="uk-input" type="email" name="email" required placeholder="Email Address">
                                 </div>
 
                                 <div class="uk-margin">
                                     <label>Phone</label>
-                                    <input class="uk-input" type="phone" placeholder="">
+                                    <input class="uk-input" type="phone" name="phone" placeholder="Phone Number">
                                 </div>
 
                                 <div class="uk-margin">
-                                    <vk-button>Request</vk-button>
-                                </div>
-
-                            </fieldset>
-                        </form>
-                    </vk-card>
-                    </vk-tabs-item>
-                    <vk-tabs-item title="Forgot Password">
-                    <vk-card padding="small" class="uk-card-dark uk-light">
-                        <form class="uk-padding-small" >
-                            <h2 class="uk-heading-bullet">Reset Password</h2>
-                            <fieldset class="uk-fieldset">
-
-                                <div class="uk-margin">
-                                    <label>Email</label>
-                                    <input class="uk-input" type="email" id="email" placeholder="Email Address">
-                                </div>
-
-                                <div class="uk-margin">
-                                    <vk-button>Reset</vk-button>
+                                    <vk-button htmlType="submit">Request</vk-button>
                                 </div>
 
                             </fieldset>
@@ -104,11 +85,25 @@
             }
         },
         methods: {
-            attemptLogin (event) {
+            submitForm (event) {
                 let el = event.target
                 let formData = new FormData(el);
+
+                if( el.attributes.login != undefined ){
+                    formData.append('client_id',     process.env.VUE_APP_PASSPORT_KEY);
+                    formData.append('client_secret', process.env.VUE_APP_PASSPORT_SECRET);
+                }
+
+                if( el.attributes.signup != undefined ){
+                    formData.append('base_url', window.location.origin+'/#/');
+                }
+
                 this.bralcoaxios({ url: el.attributes.action.value, request:el.attributes.method.value, form: formData }).then( (response) => {
+                 if( el.attributes.signup != undefined ){
+                    this.bralcoswal({t:'success',m:response.data.m,h:response.data.h});
+                 } else {
                     this.bralcoresponse(response);
+                 }
                 });
             },
         },
