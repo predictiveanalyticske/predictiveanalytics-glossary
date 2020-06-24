@@ -46,8 +46,8 @@ BralcoHelpers.install = function (Vue) {
                 switch( this.$route.name ){
                     case "auth":
                         localStorage.setItem('access_token',response.data.data.access_token);
-                        localStorage.setItem('token_type',response.data.data.type);
-                        localStorage.setItem('expires_in',response.data.data.expires_at);
+                        localStorage.setItem('token_type',response.data.data.token_type);
+                        localStorage.setItem('expires_in',response.data.data.expires_in);
                         Vue.prototype.bralcoswal({t:"success",m:response.data.m,h:response.data.h});
                     break;
                     default:
@@ -63,7 +63,6 @@ BralcoHelpers.install = function (Vue) {
                         response_container.m = data.m;
                         return Vue.prototype.bralcoswal(response_container);
                     default:
-                        console.log("here");
                         window.localStorage.clear();
                         window.location.reload();
                 }
